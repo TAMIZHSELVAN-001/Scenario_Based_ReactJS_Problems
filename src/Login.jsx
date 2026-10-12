@@ -1,13 +1,21 @@
+
 import { useState } from "react";
+import { useAuth } from "./AuthContext";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Login() {
+  const { login } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location.state?.from?.pathname || "/dashboard";
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
   function handleChange(event) {
-    console.log(event)
     const { name, value } = event.target;
 
     setFormData((prev) => ({
@@ -16,10 +24,17 @@ function Login() {
     }));
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    console.log(formData);
+    try {
+      // Pass credentials if your login function expects them.
+      await login(formData);
+
+      navigate(from, { replace: true });
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   }
 
   return (
@@ -29,29 +44,27 @@ function Login() {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email</label>
-
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
+            required
           />
         </div>
 
         <div>
           <label>Password</label>
-
           <input
             type="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
+            required
           />
         </div>
 
-        <button type="submit">
-          Login
-        </button>
+        <button type="submit">Login</button>
       </form>
     </>
   );
