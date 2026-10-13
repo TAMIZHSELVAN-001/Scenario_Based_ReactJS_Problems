@@ -21,26 +21,52 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import AbortController from "./AbortController"
 import CheckoutWizard from "./checkoutWizard";
+import { lazy, Suspense } from "react";
+import ErrorBoundary from "./ErrorBoundary";
 
 
-function Dashboard() {
-  return <h1>Welcome to Dashboard!</h1>;
-}
+const Report=lazy(()=>import("./Reports"));
 
-function Home() {
-  return <h1>Home Page</h1>;
-}
+// function Dashboard() {
+//   return <h1>Welcome to Dashboard!</h1>;
+// }
+
+// function Home() {
+//   return <h1>Home Page</h1>;
+// }
 
 
 function App() {
-  const [theme,setTheme]=useLocalStorage("theme","Light");
+  // const [theme,setTheme]=useLocalStorage("theme","Light");
+
+  const [showReports, setShowReports] = useState(false);
+  const [retryKey, setRetryKey] = useState(0);
 
   // const [cart, setCart]=useState([]);
   // function addToCart(product){
   //   setCart ((prevCart)=>[...prevCart, product]);
   // }
   return (
-    <CheckoutWizard/>
+
+     <div>
+      <h1>Shop Management System</h1>
+
+      <button onClick={() => setShowReports(true)}>
+        Open Reports
+      </button>
+
+      {showReports && (
+        <ErrorBoundary
+          key={retryKey}
+          onRetry={() => setRetryKey(prev => prev + 1)}
+        >
+          <Suspense fallback={<p>Loading reports...</p>}>
+            <Report/>
+          </Suspense>
+        </ErrorBoundary>
+      )}
+    </div>
+    // <CheckoutWizard/>
       // <AbortController/>
     //  <BrowserRouter>
     //   <AuthProvider>
