@@ -20,6 +20,7 @@ import Posts from "./useEffect"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import AbortController from "./AbortController"
+import CheckoutWizard from "./checkoutWizard";
 
 
 function Dashboard() {
@@ -39,7 +40,8 @@ function App() {
   //   setCart ((prevCart)=>[...prevCart, product]);
   // }
   return (
-      <AbortController/>
+    <CheckoutWizard/>
+      // <AbortController/>
     //  <BrowserRouter>
     //   <AuthProvider>
     //     <Routes>
