@@ -19,6 +19,7 @@ import ChatWindow from "./ChatWindow";
 import Posts from "./useEffect"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
+import AbortController from "./AbortController"
 
 
 function Dashboard() {
@@ -38,29 +39,30 @@ function App() {
   //   setCart ((prevCart)=>[...prevCart, product]);
   // }
   return (
-     <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<Home />} />
+      <AbortController/>
+    //  <BrowserRouter>
+    //   <AuthProvider>
+    //     <Routes>
+    //       <Route path="/" element={<Home />} />
 
-          <Route path="/login" element={<Login />} />
+    //       <Route path="/login" element={<Login />} />
 
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
+    //       <Route
+    //         path="/dashboard"
+    //         element={
+    //           <ProtectedRoute>
+    //             <Dashboard />
+    //           </ProtectedRoute>
+    //         }
+    //       />
 
-          <Route
-            path="*"
-            element={<Navigate to="/" replace />}
-          />
-        </Routes>
-      </AuthProvider>
-    </BrowserRouter>
+    //       <Route
+    //         path="*"
+    //         element={<Navigate to="/" replace />}
+    //       />
+    //     </Routes>
+    //   </AuthProvider>
+    // </BrowserRouter>
   //   <>
   // {/* <FAQAccordion/>
   // <Login/>
